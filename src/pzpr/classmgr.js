@@ -2,6 +2,10 @@
 //----------------------------------------------------------------------------
 // ★pzpr.classmgrオブジェクト (クラス作成関数等)
 //---------------------------------------------------------------------------
+
+var pzprCustom = { "": {} };
+var pzprCommon = require('./common.js');
+
 module.exports = {
 	//---------------------------------------------------------------
 	// 共通クラス・パズル別クラスに継承させる親クラスを生成する
@@ -12,14 +16,14 @@ module.exports = {
 	createCommon: function(commonbase) {
 		for (var key in commonbase) {
 			var names = this.searchName(key),
-				NewClass = pzpr.common[names.real];
+				NewClass = pzprCommon[names.real];
 			if (!NewClass) {
-				NewClass = this.createClass(pzpr.common[names.base]);
+				NewClass = this.createClass(pzprCommon[names.base]);
 				NewClass.prototype.common = NewClass.prototype;
 				NewClass.prototype.pid = "";
 			}
 			this.extendPrototype(NewClass.prototype, commonbase[key]);
-			pzpr.common[names.real] = pzpr.custom[""][names.real] = NewClass;
+			pzprCommon[names.real] = pzprCustom[""][names.real] = NewClass;
 		}
 	},
 
@@ -29,7 +33,7 @@ module.exports = {
 	makeCustom: function(pidlist, custombase) {
 		for (var i = 0; i < pidlist.length; i++) {
 			var pid = pidlist[i];
-			pzpr.custom[pid] = this.createCustom(pid, custombase);
+			pzprCustom[pid] = this.createCustom(pid, custombase);
 		}
 	},
 	getExtension: function(pid, custombase) {
@@ -74,7 +78,7 @@ module.exports = {
 				NewClass = custom[names.real];
 			if (!NewClass) {
 				NewClass = this.createClass(
-					custom[names.base] || pzpr.common[names.base]
+					custom[names.base] || pzprCommon[names.base]
 				);
 				NewClass.prototype.pid = pid;
 			}
@@ -83,9 +87,9 @@ module.exports = {
 		}
 
 		// 指定がなかった残りの共通クラスを作成(コピー)する
-		for (var classname in pzpr.common) {
+		for (var classname in pzprCommon) {
 			if (!custom[classname]) {
-				custom[classname] = this.createClass(pzpr.common[classname]);
+				custom[classname] = this.createClass(pzprCommon[classname]);
 				custom[classname].prototype.pid = pid;
 			}
 		}
@@ -137,7 +141,6 @@ module.exports = {
 	// idを取得して、ファイルを読み込み
 	//---------------------------------------------------------------
 	includeCustomFile: function(pid) {
-		console.log("includeCustomFile!", pid);
 /*
 		var scriptid = pzpr.variety(pid).script;
 		if (this.includedFile[scriptid]) {
@@ -157,9 +160,9 @@ module.exports = {
 		}
 */
 		var mod = pzpr.variety(pid).module;
-		this.makeCustom(mod[0], mod[1]);
+		this.makeCustom([pid], mod);
 	},
-	includedFile: {},
+	// includedFile: {},
 
 	//---------------------------------------------------------------------------
 	// 新しくパズルのファイルを開く時の処理
@@ -172,9 +175,9 @@ module.exports = {
 
 		/* 今のパズルと別idの時 */
 		if (puzzle.pid !== newpid) {
-			if (!pzpr.custom[newpid]) {
+			if (!pzprCustom[newpid]) {
 				this.includeCustomFile(newpid);
-				if (!pzpr.custom[newpid]) {
+				if (!pzprCustom[newpid]) {
 					/* Customファイルが読み込みできるまで待つ */
 					setTimeout(function() {
 						pzpr.classmgr.setPuzzleClass(puzzle, newpid, callback);
@@ -183,7 +186,7 @@ module.exports = {
 				}
 			}
 
-			/* 各クラスをpzpr.customから設定する */
+			/* 各クラスをpzprCustomから設定する */
 			this.setClasses(puzzle, newpid);
 		}
 
@@ -192,8 +195,8 @@ module.exports = {
 
 	//---------------------------------------------------------------
 	// パズル種類別のクラスをパズルのクラス一覧に設定する
-	//      共通クラス        (pzpr.common)
-	//   -> パズル種類別クラス (pzpr.custom)
+	//      共通クラス        (pzprCommon)
+	//   -> パズル種類別クラス (pzprCustom)
 	//   -> パズルが保持するクラス (initialize()の呼び出しやthis.puzzle等がつく)
 	// と、ちょっとずつ変わっている状態になります
 	//---------------------------------------------------------------
@@ -201,7 +204,7 @@ module.exports = {
 		/* 現在のクラスを消去する */
 		puzzle.klass = {};
 
-		var custom = pzpr.custom[pid];
+		var custom = pzprCustom[pid];
 		for (var classname in custom) {
 			var PuzzleClass = (puzzle.klass[classname] = function() {
 				var args = Array.prototype.slice.apply(arguments);

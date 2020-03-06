@@ -1,5 +1,7 @@
 // LineManager.js
 
+var pzprCommon = require('../pzpr/common.js');
+
 //---------------------------------------------------------------------------
 // ★LineGraphクラス 主に線や色分けの情報を管理する
 //---------------------------------------------------------------------------
@@ -71,13 +73,13 @@ module.exports = {
 			if (this.board.borderAsLine) {
 				this.pointgroup = "cross";
 			}
-			pzpr.common.GraphBase.prototype.rebuild.call(this);
+			pzprCommon.GraphBase.prototype.rebuild.call(this);
 		},
 		rebuild2: function() {
 			if (!!this.incdecLineCount) {
 				this.resetLineCount();
 			}
-			pzpr.common.GraphBase.prototype.rebuild2.call(this);
+			pzprCommon.GraphBase.prototype.rebuild2.call(this);
 		},
 
 		//---------------------------------------------------------------------------

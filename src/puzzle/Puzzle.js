@@ -1,10 +1,14 @@
 // Puzzle.js v3.6.0
 
+	MetaData = require('../pzpr/metadata.js');
+	pzprClassmgr = require('../pzpr/classmgr.js');
+	pzprCandle = require('../../node_modules/pzpr-canvas/dist/candle.js');
+	pzprUtil = require('../pzpr/util.js');
+	pzprParser = require('../pzpr/parser.js');
 	//---------------------------------------------------------------------------
 	// ★Puzzleクラス ぱずぷれv3のベース処理やその他の処理を行う
 	//---------------------------------------------------------------------------
 	Puzzle = function(canvas, option) {
-		this.pzpr = pzpr;
 
 		if (option === void 0 && (!canvas || !canvas.parentNode)) {
 			option = canvas;
@@ -29,7 +33,7 @@
 
 		this.listeners = {};
 
-		this.metadata = new pzpr.MetaData();
+		this.metadata = new MetaData();
 
 		this.config = new this.Config(this);
 		if (option.config !== void 0) {
@@ -46,7 +50,7 @@
 			this.setCanvas(canvas);
 		}
 
-		pzpr.classmgr.setClasses(this, "");
+		pzprClassmgr.setClasses(this, "");
 		initObjects(this);
 	};
 	Puzzle.prototype = {
@@ -127,7 +131,7 @@
 				return;
 			}
 
-			var rect = pzpr.util.getRect(el);
+			var rect = pzprUtil.getRect(el);
 			var _div = document.createElement("div");
 			_div.style.width = rect.width + "px";
 			_div.style.height = rect.height + "px";
@@ -230,10 +234,10 @@
 		// owner.getTime()        開始からの時間をミリ秒単位で取得する
 		//---------------------------------------------------------------------------
 		resetTime: function() {
-			this.starttime = pzpr.util.currentTime();
+			this.starttime = pzprUtil.currentTime();
 		},
 		getTime: function() {
-			return pzpr.util.currentTime() - this.starttime;
+			return pzprUtil.currentTime() - this.starttime;
 		},
 
 		//---------------------------------------------------------------------------
@@ -405,9 +409,9 @@
 
 		var classes = puzzle.klass;
 		var Board = !!classes && !!classes.Board ? classes.Board : null;
-		var pzl = pzpr.parser(data, variety || puzzle.pid);
+		var pzl = pzprParser(data, variety || puzzle.pid);
 
-		pzpr.classmgr.setPuzzleClass(puzzle, pzl.pid, function() {
+		pzprClassmgr.setPuzzleClass(puzzle, pzl.pid, function() {
 			/* パズルの種類が変わっていればオブジェクトを設定しなおす */
 			if (Board !== puzzle.klass.Board) {
 				initObjects(puzzle);
@@ -451,7 +455,7 @@
 
 		// クラス初期化
 		puzzle.board = new classes.Board(); // 盤面オブジェクト
-		pzpr.classmgr.setPrototypeRef(puzzle, "board", puzzle.board);
+		pzprClassmgr.setPrototypeRef(puzzle, "board", puzzle.board);
 
 		puzzle.checker = new classes.AnsCheck(); // 正解判定オブジェクト
 		puzzle.painter = new classes.Graphic(); // 描画系オブジェクト
@@ -473,14 +477,14 @@
 		/* fillTextが使えない場合は強制的にSVG描画に変更する */
 		if (
 			type === "canvas" &&
-			!!pzpr.Candle.enable.canvas &&
+			!!pzprCandle.enable.canvas &&
 			!CanvasRenderingContext2D.prototype.fillText
 		) {
 			type = "svg";
 		}
 
-		pzpr.Candle.start(puzzle.canvas, type, function(g) {
-			pzpr.util.unselectable(g.canvas);
+		pzprCandle.start(puzzle.canvas, type, function(g) {
+			pzprUtil.unselectable(g.canvas);
 			g.child.style.pointerEvents = "none";
 			if (g.use.canvas && !puzzle.subcanvas) {
 				var canvas = (puzzle.subcanvas = createSubCanvas("canvas"));
@@ -499,11 +503,11 @@
 		});
 	}
 	function createSubCanvas(type) {
-		if (!pzpr.Candle.enable[type]) {
+		if (!pzprCandle.enable[type]) {
 			return null;
 		}
 		var el = document.createElement("div");
-		pzpr.Candle.start(el, type);
+		pzprCandle.start(el, type);
 		return el;
 	}
 
@@ -539,7 +543,7 @@
 	//---------------------------------------------------------------------------
 	function setCanvasEvents(puzzle) {
 		function ae(type, func) {
-			pzpr.util.addEvent(puzzle.canvas, type, puzzle, func);
+			pzprUtil.addEvent(puzzle.canvas, type, puzzle, func);
 		}
 
 		// マウス入力イベントの設定
@@ -622,7 +626,7 @@
 	function parseImageOption() {
 		// (type,quality,option)のはず
 		var imageopt = {};
-		var type = pzpr.Candle.current;
+		var type = pzprCandle.current;
 		var cellsize = null,
 			bgcolor = null,
 			quality = null;
@@ -650,7 +654,7 @@
 			}
 		}
 
-		imageopt.type = (type || pzpr.Candle.current).match(/svg/)
+		imageopt.type = (type || pzprCandle.current).match(/svg/)
 			? "svg"
 			: "canvas";
 		imageopt.mimetype =

@@ -10,6 +10,8 @@
 		LT = 8,
 		RT = 9;
 
+	var pzprCommon = require('../pzpr/common.js');
+
 	//---------------------------------------------------------------------------
 	// ★Graphicクラス Canvasに描画する
 	//---------------------------------------------------------------------------
@@ -31,7 +33,7 @@ module.exports = {
 					["getCircleFillColor", this.circlefillcolor_func],
 					["getCircleStrokeColor", this.circlestrokecolor_func]
 				].forEach(function(item) {
-					if (pc[item[0]] !== pzpr.common.Graphic.prototype[item[0]]) {
+					if (pc[item[0]] !== pzprCommon.Graphic.prototype[item[0]]) {
 						return;
 					} // パズル個別の関数が定義されている場合はそのまま使用
 					pc[item[0]] = pc[item[0] + "_" + item[1]] || pc[item[0]];
@@ -215,7 +217,7 @@ module.exports = {
 			//---------------------------------------------------------------------------
 			initFont: function() {
 				var isgothic = this.puzzle.getConfig("font") === 1;
-				if (this.puzzle.pzpr.env.OS.Android) {
+				if (pzpr.env.OS.Android) {
 					this.fontfamily = isgothic
 						? "Helvetica, Verdana, Arial, "
 						: '"Times New Roman", ';

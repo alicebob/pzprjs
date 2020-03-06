@@ -1,7 +1,7 @@
 //
 // パズル固有スクリプト部 ぬりかべ・ぬりぼう・モチコロ・モチにょろ版 nurikabe.js
 //
-var pidlist = ["nurikabe", "nuribou", "mochikoro", "mochinyoro"]
+var pidlist = ["nurikabe", "nuribou", "mochikoro", "mochinyoro"];
 var classbase = {
 	//---------------------------------------------------------
 	// マウス入力系
@@ -392,4 +392,5 @@ var classbase = {
 	}
 };
 
-module.exports = [pidlist, classbase];
+// module.exports = [pidlist, classbase];
+module.exports = classbase;

@@ -1,4 +1,6 @@
 // Encode.js v3.4.1
+//
+pzprParser = require('../pzpr/parser.js');
 
 //---------------------------------------------------------------------------
 // ★Encodeクラス URLのエンコード/デコードを扱う
@@ -39,7 +41,7 @@ module.exports = {
 		// enc.encodePzpr()  各パズルのURL出力用(オーバーライド用)
 		//---------------------------------------------------------------------------
 		decodeURL: function(url) {
-			var pzl = pzpr.parser.parseURL(url),
+			var pzl = pzprParser.parseURL(url),
 				puzzle = this.puzzle,
 				bd = puzzle.board;
 
@@ -83,7 +85,7 @@ module.exports = {
 			var puzzle = this.puzzle,
 				pid = puzzle.pid,
 				bd = puzzle.board;
-			var pzl = new pzpr.parser.URLData("", mode);
+			var pzl = new pzprParser.URLData("", mode);
 
 			type =
 				type || pzl.URL_PZPRV3; /* type===pzl.URL_AUTO(0)もまとめて変換する */

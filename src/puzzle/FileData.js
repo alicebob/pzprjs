@@ -7,6 +7,9 @@
 	//---------------------------------------------------------------------------
 	// ★FileIOクラス ファイルのデータ形式エンコード/デコードを扱う
 	//---------------------------------------------------------------------------
+	//
+var pzprParser = require('../pzpr/parser.js');
+
 module.exports = {
 		//---------------------------------------------------------
 		FileIO: {
@@ -23,7 +26,7 @@ module.exports = {
 			filedecode: function(datastr) {
 				var puzzle = this.puzzle,
 					bd = puzzle.board,
-					pzl = pzpr.parser.parseFile(datastr, puzzle.pid);
+					pzl = pzprParser.parseFile(datastr, puzzle.pid);
 				var filetype = (this.currentType = pzl.type);
 
 				bd.initBoardSize(pzl.cols, pzl.rows);
@@ -70,7 +73,7 @@ module.exports = {
 			fileencode: function(filetype, option) {
 				var puzzle = this.puzzle,
 					bd = puzzle.board;
-				var pzl = new pzpr.parser.FileData("", puzzle.pid);
+				var pzl = new pzprParser.FileData("", puzzle.pid);
 
 				this.currentType = filetype =
 					filetype ||
@@ -289,12 +292,12 @@ module.exports = {
 						2 * bd.rows - 2
 					);
 				} else if (bd.hasborder === 2) {
-					if (this.currentType === pzpr.parser.FILE_PZPR) {
+					if (this.currentType === pzprParser.FILE_PZPR) {
 						this.decodeObj(func, "border", 0, 1, 2 * bd.cols, 2 * bd.rows - 1);
 						this.decodeObj(func, "border", 1, 0, 2 * bd.cols - 1, 2 * bd.rows);
 					}
 					// pencilboxでは、outsideborderの時はぱずぷれとは順番が逆になってます
-					else if (this.currentType === pzpr.parser.FILE_PBOX) {
+					else if (this.currentType === pzprParser.FILE_PBOX) {
 						this.decodeObj(func, "border", 1, 0, 2 * bd.cols - 1, 2 * bd.rows);
 						this.decodeObj(func, "border", 0, 1, 2 * bd.cols, 2 * bd.rows - 1);
 					}
@@ -369,12 +372,12 @@ module.exports = {
 						2 * bd.rows - 2
 					);
 				} else if (bd.hasborder === 2) {
-					if (this.currentType === pzpr.parser.FILE_PZPR) {
+					if (this.currentType === pzprParser.FILE_PZPR) {
 						this.encodeObj(func, "border", 0, 1, 2 * bd.cols, 2 * bd.rows - 1);
 						this.encodeObj(func, "border", 1, 0, 2 * bd.cols - 1, 2 * bd.rows);
 					}
 					// pencilboxでは、outsideborderの時はぱずぷれとは順番が逆になってます
-					else if (this.currentType === pzpr.parser.FILE_PBOX) {
+					else if (this.currentType === pzprParser.FILE_PBOX) {
 						this.encodeObj(func, "border", 1, 0, 2 * bd.cols - 1, 2 * bd.rows);
 						this.encodeObj(func, "border", 0, 1, 2 * bd.cols, 2 * bd.rows - 1);
 					}

@@ -1,5 +1,5 @@
-
-var pzpr = require('../dist/js/pzpr.js');
+#!/bin/env node
+var pzpr = require('../src/pzpr.js');
 
 console.log(pzpr.version);
 
