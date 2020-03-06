@@ -1,5 +1,6 @@
 // FileData.js
 
+
 	function throwNoImplementation() {
 		throw "no implementation";
 	}
@@ -9,6 +10,8 @@
 	//---------------------------------------------------------------------------
 	//
 var pzprParser = require('../pzpr/parser.js');
+var pzprCandle = require('../../node_modules/pzpr-canvas/dist/candle.js');
+var DOMParser = pzprCandle.DOMParser;
 
 module.exports = {
 		//---------------------------------------------------------

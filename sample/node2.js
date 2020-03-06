@@ -1,5 +1,5 @@
-
-var pzpr = require('../index.js');
+#!/bin/env node
+var pzpr = require('../src/pzpr.js');
 
 var puzzle = new pzpr.Puzzle().open('mashu/3/3');
 

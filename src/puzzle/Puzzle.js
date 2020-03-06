@@ -5,6 +5,8 @@
 	pzprCandle = require('../../node_modules/pzpr-canvas/dist/candle.js');
 	pzprUtil = require('../pzpr/util.js');
 	pzprParser = require('../pzpr/parser.js');
+
+	var document = pzpr.Candle.document;
 	//---------------------------------------------------------------------------
 	// ★Puzzleクラス ぱずぷれv3のベース処理やその他の処理を行う
 	//---------------------------------------------------------------------------

@@ -160,7 +160,7 @@ module.exports = {
 		}
 */
 		var mod = pzpr.variety(pid).module;
-		this.makeCustom([pid], mod);
+		this.makeCustom(mod.pidlist, mod.classbase);
 	},
 	// includedFile: {},
 

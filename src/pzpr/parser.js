@@ -1,6 +1,10 @@
 // Parser.js v3.4.1
 
-	MetaData = require('./metadata.js')
+var MetaData = require('./metadata.js')
+var pzprVariety = require('./variety.js')
+var pzprEnv = require('./env.js')
+var pzprCandle = require('../../node_modules/pzpr-canvas/dist/candle.js');
+var XMLSerializer = pzprCandle.XMLSerializer;
 
 	var URL_AUTO = 0,
 		URL_PZPRV3 = 1,
@@ -189,7 +193,7 @@
 					this.type = URL_PZPRV3;
 				}
 			}
-			this.pid = pzpr.variety.toPID(this.pid);
+			this.pid = pzprVariety.toPID(this.pid);
 		},
 
 		//---------------------------------------------------------------------------
@@ -197,7 +201,7 @@
 		//---------------------------------------------------------------------------
 		outputURLType: function() {
 			var url = "";
-			if (pzpr.env.node) {
+			if (pzprEnv.node) {
 				url = "http://pzv.jp/p.html";
 			} else {
 				url = location.protocol + "//" + location.host + location.pathname;
@@ -235,8 +239,8 @@
 				url = url + typ;
 			}
 			return url
-				.replace("%PID%", pzpr.variety(pid).urlid)
-				.replace("%KID%", pzpr.variety(this.pid).kanpenid);
+				.replace("%PID%", pzprVariety(pid).urlid)
+				.replace("%KID%", pzprVariety(this.pid).kanpenid);
 		},
 
 		//---------------------------------------------------------------------------
@@ -498,7 +502,7 @@
 			} else {
 				this.pid = "";
 			}
-			this.pid = pzpr.variety.toPID(this.pid);
+			this.pid = pzprVariety.toPID(this.pid);
 
 			return !!this.pid;
 		},
@@ -517,7 +521,7 @@
 			} else if (this.type === FILE_PBOX_XML) {
 				this.body
 					.querySelector("puzzle")
-					.setAttribute("type", pzpr.variety(this.pid).kanpenid);
+					.setAttribute("type", pzprVariety(this.pid).kanpenid);
 			}
 			return "";
 		},

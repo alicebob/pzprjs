@@ -4,6 +4,8 @@
 // ★AnsCheckクラス 答えチェック関連の関数を扱う
 //---------------------------------------------------------------------------
 
+var pzprUtil = require('../pzpr/util.js');
+
 // 回答チェッククラス
 // AnsCheckクラス
 module.exports = {
@@ -32,7 +34,7 @@ module.exports = {
 					isexist = true,
 					prio = 0;
 				if (item.match("@")) {
-					isexist = pzpr.util.checkpid(
+					isexist = pzprUtil.checkpid(
 						item.substr(item.indexOf("@") + 1),
 						this.puzzle.pid
 					);

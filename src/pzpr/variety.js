@@ -205,7 +205,7 @@
 			loopsp: [1, 0, "環状線スペシャル", "Loop Special", "pipelink"],
 			loute: [0, 0, "エルート", "L-route"],
 			makaro: [0, 0, "マカロ", "Makaro"],
-			mashu: [0, 1, "ましゅ", "Masyu", "", { kanpen: "masyu", alias: "pearl" }],
+			mashu: [0, 1, "ましゅ", "Masyu", require('../variety/mashu.js'), { kanpen: "masyu", alias: "pearl" }],
 			maxi: [0, 0, "Maxi Loop", "Maxi Loop", "country"],
 			meander: [0, 0, "にょろにょろナンバー", "Meandering Numbers", "ripple"],
 			mejilink: [0, 0, "メジリンク", "Mejilink"],
@@ -229,7 +229,7 @@
 				{ kanpen: "numberlink" }
 			],
 			nuribou: [1, 0, "ぬりぼう", "Nuribou", require('../variety/nurikabe.js')],
-			nurikabe: [0, 1, "ぬりかべ", "Nurikabe", "nurikabe", require('../variety/nurikabe.js')],
+			nurikabe: [0, 1, "ぬりかべ", "Nurikabe", require('../variety/nurikabe.js')],
 			nurimaze: [0, 0, "ぬりめいず", "Nuri-Maze", "nurimaze"],
 			nurimisaki: [0, 0, "ぬりみさき", "Nurimisaki", "kurodoko"],
 			onsen: [0, 0, "温泉めぐり", "Onsen-meguri", "country"],

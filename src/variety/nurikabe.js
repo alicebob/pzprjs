@@ -392,5 +392,4 @@ var classbase = {
 	}
 };
 
-// module.exports = [pidlist, classbase];
-module.exports = classbase;
+module.exports = {pidlist: pidlist, classbase: classbase};
