@@ -3,7 +3,7 @@
 var MetaData = require('./metadata.js')
 var pzprVariety = require('./variety.js')
 var pzprEnv = require('./env.js')
-var pzprCandle = require('../../node_modules/pzpr-canvas/dist/candle.js');
+var pzprCandle = require('pzpr-canvas');
 var XMLSerializer = pzprCandle.XMLSerializer;
 
 	var URL_AUTO = 0,

@@ -2,7 +2,7 @@
 
 	MetaData = require('../pzpr/metadata.js');
 	pzprClassmgr = require('../pzpr/classmgr.js');
-	pzprCandle = require('../../node_modules/pzpr-canvas/dist/candle.js');
+	pzprCandle = require('pzpr-canvas');
 	pzprUtil = require('../pzpr/util.js');
 	pzprParser = require('../pzpr/parser.js');
 

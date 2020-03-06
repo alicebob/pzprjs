@@ -1,5 +1,5 @@
 pzpr = require('./pzpr/core.js');
-pzpr.Candle = require('../node_modules/pzpr-canvas/dist/candle.js');
+pzpr.Candle = require('pzpr-canvas');
 pzpr.env = require('./pzpr/env.js');
 pzpr.lang = require('./pzpr/lang.js');
 require('./pzpr/event.js');

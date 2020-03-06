@@ -10,7 +10,7 @@
 	//---------------------------------------------------------------------------
 	//
 var pzprParser = require('../pzpr/parser.js');
-var pzprCandle = require('../../node_modules/pzpr-canvas/dist/candle.js');
+var pzprCandle = require('pzpr-canvas');
 var DOMParser = pzprCandle.DOMParser;
 
 module.exports = {
